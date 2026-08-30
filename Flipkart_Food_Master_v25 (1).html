@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Flipkart Food — Bengaluru</title>
+<style>
+:root{
+  --blue:#2874F0;--blue2:#0B4DB8;--navy:#002B84;--yellow:#FFE500;--coin:#FFC200;
+  --bg:#F7F8FB;--card:#fff;--ink:#101114;--sub:#666C78;--muted:#9AA0AA;--line:#E8EAF0;
+  --green:#0D9B6B;--soft:#EEF4FF;--shadow:0 8px 22px rgba(16,17,20,.07);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#11151c;font-family:var(--font);color:var(--ink)}
+button,input{font:inherit}button{cursor:pointer}img,video,iframe{display:block}
+#app{width:min(360px,calc(100vw - 20px));height:min(780px,calc(100vh - 20px));margin:10px auto;background:var(--bg);position:relative;overflow:hidden;border-radius:24px}
+@media(min-width:650px){#app{width:360px;height:780px;margin:10px auto;border-radius:26px;border:5px solid #20242C;box-shadow:0 20px 56px rgba(0,0,0,.30)}}
+.screen{height:100%;overflow:auto;padding-bottom:88px;scrollbar-width:none}.screen::-webkit-scrollbar{display:none}
+
+/* TOP OF APP — intentionally kept unchanged */
+.top{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#073B92,#002B84);color:#fff;padding:11px 13px 0}
+.toprow{display:flex;align-items:center;gap:9px}.brand{font-weight:900;font-style:italic;font-size:18px}.brand span{color:var(--yellow)}
+.loc{font-size:11px;flex:1;min-width:0}.loc b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.loc small{color:rgba(255,255,255,.68)}
+.coin{height:34px;padding:0 9px 0 5px;border-radius:999px;background:rgba(255,255,255,.14);display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800}.coin img{width:23px;height:23px;border-radius:50%;object-fit:cover;display:block;background:#FFC200}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.15);font-size:10px;font-weight:800}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);margin-top:10px}.tab{height:44px;border:0;background:transparent;color:rgba(255,255,255,.66);font-size:9.2px;line-height:1.05;font-weight:850;border-bottom:3px solid transparent;padding:0 3px}.tab.on{color:#fff;border-bottom-color:var(--yellow)}
+.searchbar{height:46px;margin:10px 15px 0;border-radius:14px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;gap:9px;padding:0 12px;font-size:12px;color:var(--muted);box-shadow:0 2px 10px rgba(10,34,70,.06)}
+
+/* ===== ONLY REDESIGNED AREA: PROMO / AD CAROUSEL ===== */
+.promo{padding-top:13px}
+.promorail{
+  display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+  padding:0 15px;scrollbar-width:none;scroll-padding:0 15px
+}
+.promorail::-webkit-scrollbar{display:none}
+.banner{min-height:164px;
+  width:calc(100% - 34px);min-width:calc(100% - 34px);height:178px;scroll-snap-align:start;
+  border-radius:24px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow);
+  isolation:isolate
+}
+.banner:before{
+  content:"";position:absolute;width:154px;height:154px;border-radius:50%;
+  right:-70px;top:-72px;background:rgba(255,255,255,.075);z-index:-1
+}
+.banner:after{
+  content:"";position:absolute;width:92px;height:92px;border-radius:50%;
+  right:52px;bottom:-62px;background:rgba(255,255,255,.05);z-index:-1
+}
+.banner .kicker{
+  font-size:9px;letter-spacing:.095em;text-transform:uppercase;font-weight:900;
+  position:relative;z-index:2;display:flex;align-items:center;gap:5px
+}
+.banner .kicker .spark{font-size:9px;line-height:1}
+.banner h2{
+  font-size:22px;line-height:1.04;letter-spacing:-.7px;margin:5px 0 0;
+  max-width:255px;position:relative;z-index:2
+}
+.banner p{
+  font-size:10.8px;line-height:1.36;margin:7px 0 0;max-width:226px;
+  position:relative;z-index:2
+}
+.banner .cta{
+  position:absolute;left:18px;bottom:17px;height:37px;border:0;border-radius:999px;
+  padding:0 15px;font-size:10.5px;font-weight:900;z-index:3
+}
+.banner .visual{position:absolute;right:16px;bottom:16px;z-index:2}
+
+/* 1 — SuperCoins: dark flash-deal visual, but copy uses actual programme mechanics */
+.b1{background:linear-gradient(135deg,#282B35 0%,#1A1C23 70%,#111318 100%);color:#fff}
+.b1 .kicker{color:var(--yellow)}.b1 p{color:#D9DBE1}.b1 .cta{background:var(--coin);color:#4F3B00}
+.coinart{
+  width:74px;height:74px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 34% 28%,#FFF0A0 0,#FFC64A 34%,#FF9E42 70%,#F17B3B 100%);
+  border:4px solid rgba(255,223,114,.5);box-shadow:0 8px 24px rgba(255,194,0,.24);
+  position:relative
+}
+.coinart:before{
+  content:"";position:absolute;inset:11px;border-radius:50%;border:3px solid rgba(157,91,0,.32)
+}
+.coinart:after{
+  content:"SC";font-size:12px;font-weight:950;color:#8A5700;letter-spacing:-.3px
+}
+
+/* 2 — Planner: strong Flipkart blue + white CTA */
+.b2{background:linear-gradient(135deg,#2B72EB 0%,#1651BE 55%,#093B99 100%);color:#fff}
+.b2 .kicker{color:#CFE2FF}.b2 p{color:#E5EEFF}.b2 .cta{background:#fff;color:#0B4DB8}
+.calendar{
+  width:78px;height:70px;border-radius:17px;background:linear-gradient(180deg,#F9FBFF,#E8EDF8);
+  padding:9px;box-shadow:0 8px 24px rgba(0,0,0,.16);transform:rotate(1.5deg);position:relative
+}
+.calendar:before,.calendar:after{
+  content:"";position:absolute;top:-5px;width:5px;height:12px;border-radius:4px;background:#C7D5F7;
+  border:1px solid #7092D8
+}
+.calendar:before{left:16px}.calendar:after{right:16px}
+.calendar .head{height:9px;background:#5579C8;border-radius:4px;margin:2px 0 8px}
+.calendar .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.calendar .grid i{height:9px;border-radius:3px;background:#CED8EA}
+.calendar .grid i:nth-child(3),.calendar .grid i:nth-child(6),.calendar .grid i:nth-child(10){background:#2874F0}
+
+/* 3 — Tiffin: warm peach like the supplied reference */
+.b3{background:linear-gradient(135deg,#FFF1E9 0%,#FFD8C7 72%,#FFCBB6 100%);color:#692B16}
+.b3 .kicker{color:#B94F2B}.b3 p{color:#8B5038}.b3 .cta{background:#EC6540;color:#fff}
+.tiffinart{
+  width:78px;height:68px;border-radius:21px;background:rgba(255,255,255,.68);
+  border:1px solid rgba(185,79,43,.13);display:grid;place-items:center;
+  box-shadow:0 8px 20px rgba(150,65,34,.10);position:relative
+}
+.tiffinart .plate{width:50px;height:50px;border-radius:50%;background:#F6A36B;border:5px solid #8A76A8;position:relative}
+.tiffinart .plate:before{content:"";position:absolute;width:13px;height:13px;border-radius:50%;background:#E9563C;left:8px;top:7px;box-shadow:18px 5px 0 #79B75A,8px 21px 0 #F1CF58}
+.tiffinart .plate:after{content:"";position:absolute;width:23px;height:6px;border-radius:50%;background:#F8DDA7;left:9px;bottom:5px}
+
+/* 4 — Bites: QSR proposition without repeating a speed claim */
+.b4{background:linear-gradient(135deg,#2B72EF 0%,#1854C1 55%,#0A3E9E 100%);color:#fff}
+.b4 .kicker{color:var(--yellow)}.b4 p{color:#E2EBFF}.b4 .cta{background:var(--yellow);color:var(--navy)}
+.bite-logos{display:grid;grid-template-columns:repeat(3,31px);gap:6px}
+.bite-logos img{
+  width:31px;height:31px;border-radius:9px;background:#fff;padding:4px;object-fit:contain;
+  border:1px solid rgba(255,255,255,.62);box-shadow:0 2px 5px rgba(0,0,0,.08)
+}
+
+/* 5 — Campus welcome: existing fifth card retained */
+.b5{background:linear-gradient(135deg,#FFF8DC 0%,#FFE9A3 72%,#FFDB65 100%);color:#654B00}
+.b5 .kicker{color:#8B6500}.b5 p{color:#78611C}.b5 .cta{background:#173D7A;color:#fff}
+.studentart{
+  width:76px;height:70px;border-radius:21px;background:rgba(255,255,255,.7);
+  border:1px solid rgba(133,100,0,.10);display:grid;place-items:center;
+  box-shadow:0 8px 20px rgba(117,87,0,.08)
+}
+.studentart svg{width:43px;height:43px}
+.dots{display:flex;justify-content:center;gap:5px;padding:8px 0 0}
+.dots i{display:block;width:5px;height:5px;border-radius:50%;background:#D3D6DC;transition:.2s}
+.dots i.on{width:17px;border-radius:5px;background:var(--blue)}
+
+/* Everything below this point mirrors the existing consumer flow */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:13px 15px 1px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{height:39px;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#5C626D;font-size:11.5px;font-weight:800;white-space:nowrap}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sec{padding:18px 15px 0}.sechead{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}.eyebrow{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:900}.sechead h3{font-size:19px;letter-spacing:-.45px;margin:2px 0 0}.see{border:0;background:none;color:var(--blue);font-size:11.5px;font-weight:900}
+.rail{display:flex;gap:10px;overflow:auto;margin:0 -15px;padding:0 15px 2px;scrollbar-width:none}.rail::-webkit-scrollbar{display:none}
+.reel{width:144px;height:224px;flex:0 0 auto;border-radius:18px;overflow:hidden;position:relative;background:#111;box-shadow:var(--shadow)}.reel img,.reel video{width:100%;height:100%;object-fit:cover}.shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88),rgba(0,0,0,.04) 60%)}.play{position:absolute;top:9px;right:9px;width:29px;height:29px;border-radius:50%;background:rgba(0,0,0,.44);display:grid;place-items:center;color:#fff;font-size:10px}.reelcopy{position:absolute;left:10px;right:10px;bottom:10px;color:#fff}.reelcopy b{font-size:12.5px;display:block}.reelcopy small{font-size:9.4px;color:rgba(255,255,255,.72)}
+.bitesbadge{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:999px;background:#FFF8D8;color:#173D7A;border:1px solid #F1D65A;font-size:9px;font-weight:900;vertical-align:middle}.bitesbadge:before{content:"B";width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#FFF6A0,#FFD319 65%,#F1B900);color:#003C95;font-size:8px}
+.qcard{width:150px;flex:0 0 auto;background:#fff;border:1px solid #ECEEF2;border-radius:17px;overflow:hidden}.qpic{height:88px;position:relative}.qpic>img:first-child{width:100%;height:100%;object-fit:cover}.brandlogo{position:absolute;left:8px;bottom:7px;width:32px;height:32px;border-radius:9px;background:#fff;padding:4px;object-fit:contain;border:1px solid rgba(0,0,0,.08)}.qcopy{padding:9px 10px 11px}.qcopy b{font-size:12.3px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.qcopy small{font-size:9.4px;color:var(--muted);display:block;margin-top:5px}
+.restlist{display:grid;gap:10px}.restcard{display:flex;gap:10px;padding:10px;border:1px solid #ECEEF2;border-radius:18px;background:#fff}.restpic{width:96px;height:90px;border-radius:14px;overflow:hidden;position:relative;flex:0 0 auto}.restpic>img:first-child{width:100%;height:100%;object-fit:cover}.restcopy{flex:1;min-width:0;padding:2px 0}.restname{font-size:13.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:10.3px;color:var(--sub);display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}.rating{color:var(--green);font-weight:900}.price{font-size:11.3px;font-weight:850;margin-top:6px}
+.pagehead{padding:16px 15px 0;display:flex;gap:10px;align-items:center}.pagehead h2{font-size:22px;margin:0}.pagehead small{font-size:9.8px;color:var(--muted);display:block;margin-top:2px}.back{width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:#fff;font-size:22px}
+.menuhero{margin:12px 15px 0;background:#fff;border:1px solid #ECEEF2;border-radius:19px;overflow:hidden}.menucover{height:146px;position:relative}.menucover>img:first-child{width:100%;height:100%;object-fit:cover}.menubrand{position:absolute;left:12px;bottom:10px;display:flex;align-items:center;gap:8px}.menubrand img{width:44px;height:44px;border-radius:10px;background:#fff;padding:4px;object-fit:contain}.menubrand span{background:rgba(255,255,255,.95);border-radius:12px;padding:7px 10px;font-size:11.5px;font-weight:900}.menumeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:10px 11px 11px;font-size:9px;color:var(--sub)}
+.seg{display:flex;gap:4px;margin:12px 15px 0;padding:4px;border-radius:13px;background:#EEF2F8}.seg button{height:41px;flex:1;border:0;border-radius:10px;background:transparent;color:#6E7480;font-size:11.5px;font-weight:900}.seg button.on{background:#fff;color:var(--blue2)}
+.menuitems{padding:12px 15px 0;display:grid;gap:9px}.menuitem{display:flex;gap:10px;background:#fff;border:1px solid #ECEEF2;border-radius:16px;padding:10px}.itemcopy{flex:1}.itemcopy b{font-size:12px;display:block}.itemcopy small{font-size:9.3px;color:var(--muted)}.itemfoot{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.add{height:36px;padding:0 15px;border:1.5px solid var(--blue);border-radius:10px;background:#fff;color:var(--blue);font-size:10px;font-weight:900}.itemimg{width:85px;height:78px;border-radius:12px;overflow:hidden}.itemimg img{width:100%;height:100%;object-fit:cover}
+.planhero,.taste,.reward,.mini{margin:12px 15px 0;background:#fff;border:1px solid #ECEEF2;border-radius:18px;padding:14px}.planhero{background:linear-gradient(140deg,#EEF4FF,#FAFCFF);border-color:#DDE8FF}.planhero b,.taste b,.mini b{font-size:13px}.planhero p,.taste p,.mini small{font-size:9.6px;color:var(--sub);line-height:1.4}.mealToggle{display:flex;gap:4px;margin-top:10px;padding:4px;background:#fff;border:1px solid #E8ECF4;border-radius:12px}.mealToggle button{height:38px;flex:1;border:0;border-radius:9px;background:transparent;color:#737986;font-size:10.3px;font-weight:900}.mealToggle button.on{background:var(--navy);color:#fff}
+.daystrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 15px 0}.day{background:#fff;border:1px solid #ECEEF2;border-radius:14px;padding:9px;text-align:center;font-size:10px}.day.on{background:#F4F7FF;border-color:#B7CFFF}
+.planlist,.plans{padding:12px 15px 0;display:grid;gap:9px}.planmeal,.plancard{background:#fff;border:1px solid #ECEEF2;border-radius:16px;padding:11px}.planmeal b,.plancard b{font-size:11.8px}.planmeal small,.plancard small{display:block;font-size:9.2px;color:var(--muted);margin-top:3px}.planact{display:flex;gap:8px;margin-top:9px}.planact button{height:36px;flex:1;border:1px solid var(--blue);background:#fff;color:var(--blue);border-radius:9px;font-size:9.8px;font-weight:900}
+.reward{background:linear-gradient(135deg,#111318,#282B33);color:#fff}.reward .big{font-size:29px;font-weight:900;color:var(--yellow)}
+.bottom{position:absolute;left:0;right:0;bottom:0;height:68px;background:rgba(255,255,255,.97);backdrop-filter:blur(18px);border-top:1px solid #E7E8EC;display:grid;grid-template-columns:repeat(5,1fr);z-index:50}.nav{border:0;background:none;color:#959BA6;font-size:9.3px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.nav .ico{font-size:19px}.nav.on{color:var(--blue)}.reelsnav{overflow:visible}.orb{width:42px;height:42px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,#2874F0,#0B4DB8);color:#fff;border:3px solid #fff;box-shadow:0 7px 16px rgba(40,116,240,.3);margin-top:-22px;font-size:16px}
+.overlay{position:absolute;inset:0;background:rgba(8,10,15,.46);z-index:70;display:none}.overlay.on{display:block}.sheet{position:absolute;left:0;right:0;bottom:0;z-index:71;max-height:80%;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:15px;transform:translateY(105%);transition:.2s}.sheet.on{transform:translateY(0)}.sheet h3{margin:0}.sheet p{font-size:10.5px;line-height:1.45;color:var(--sub)}.secondary,.primary{width:100%;height:44px;border-radius:12px;margin-top:9px;font-weight:900}.secondary{border:1px solid var(--line);background:#fff}.primary{border:0;background:var(--blue);color:#fff}
+.player{position:absolute;inset:0;background:#050608;z-index:80;display:none;overflow:hidden}.player.on{display:block}.pclose{position:absolute;top:16px;left:14px;z-index:86;width:42px;height:42px;border:0;border-radius:50%;background:rgba(0,0,0,.54);color:#fff;font-size:16px}.reelfeed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none}.reelfeed::-webkit-scrollbar{display:none}.reelpage{height:100%;position:relative;scroll-snap-align:start;scroll-snap-stop:always;background:#090A0D;overflow:hidden}.reelpage video,.reelpage .reelfallback{width:100%;height:100%;object-fit:cover}.reelpage .reelfallback{position:absolute;inset:0}.reelgrad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 30%,transparent 52%,rgba(0,0,0,.88) 100%);pointer-events:none}.reeltop{position:absolute;top:19px;left:68px;right:18px;z-index:83;color:#fff;font-size:12px;font-weight:900;display:flex;justify-content:space-between;align-items:center}.reeltop .cartmini{background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.18);padding:7px 10px;border-radius:999px}.reelinfo{position:absolute;left:16px;right:72px;bottom:95px;z-index:83;color:#fff}.reelbrand{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:850;margin-bottom:7px}.reelbrand img{width:27px;height:27px;border-radius:8px;background:#fff;padding:3px;object-fit:contain}.reelinfo h3{font-size:21px;line-height:1.05;margin:0 0 5px;letter-spacing:-.5px}.reelinfo .reelprice{font-size:16px;font-weight:900;margin-top:6px}.reelcommerce{position:absolute;left:16px;right:16px;bottom:22px;z-index:84;display:grid;grid-template-columns:1fr auto;gap:8px}.reelproduct{height:56px;border-radius:15px;background:rgba(255,255,255,.96);display:flex;align-items:center;gap:9px;padding:7px 10px;min-width:0}.reelproduct img{width:42px;height:42px;border-radius:10px;object-fit:cover}.reelproduct div{min-width:0}.reelproduct b{font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.reelproduct small{font-size:9px;color:#747A85}.reeladd{height:56px;border:0;border-radius:15px;background:#FFE500;color:#002B84;padding:0 17px;font-size:11px;font-weight:950;box-shadow:0 5px 16px rgba(0,0,0,.18)}.reelside{position:absolute;right:14px;bottom:102px;z-index:84;display:grid;gap:11px}.reelside button{width:44px;height:44px;border:0;border-radius:50%;background:rgba(0,0,0,.46);color:#fff;font-size:15px}.reelhint{position:absolute;top:74px;left:50%;transform:translateX(-50%);z-index:84;color:rgba(255,255,255,.78);font-size:9px;background:rgba(0,0,0,.34);padding:6px 9px;border-radius:999px;pointer-events:none}.minuteshero{margin:12px 15px 0;border-radius:20px;padding:17px;background:linear-gradient(135deg,#5C1024,#8E1E3D);color:#fff;box-shadow:var(--shadow)}.minuteshero small{font-size:9px;color:#F1C6D2;text-transform:uppercase;font-weight:900;letter-spacing:.09em}.minuteshero h2{font-size:22px;margin:4px 0}.minuteshero p{font-size:10.3px;line-height:1.4;margin:0;color:#F7DDE4}.minutesgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:13px 15px 0}.minprod{background:#fff;border:1px solid #ECEEF2;border-radius:17px;padding:11px;min-height:154px;position:relative}.minprod .emoji{height:64px;border-radius:14px;background:#F6F7FA;display:grid;place-items:center;font-size:37px}.minprod b{font-size:11.5px;display:block;margin-top:8px}.minprod small{font-size:9px;color:var(--muted);display:block;margin-top:2px}.minprod .mprice{font-size:12px;font-weight:900;margin-top:8px}.minprod .madd{position:absolute;right:9px;bottom:9px;height:32px;border:1px solid var(--blue);background:#fff;color:var(--blue);border-radius:9px;padding:0 10px;font-size:9px;font-weight:900}
+.toast{position:absolute;left:50%;bottom:102px;transform:translate(-50%,10px);background:#111318;color:#fff;padding:10px 14px;border-radius:12px;font-size:10.5px;opacity:0;transition:.18s;z-index:90}.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== V16: order-pattern delivery choices + model economics ===== */
+.foodcartbar{
+  position:absolute;left:12px;right:12px;bottom:86px;z-index:49;
+  min-height:56px;border-radius:16px;background:#111318;color:#fff;
+  display:none;align-items:center;gap:10px;padding:9px 10px 9px 13px;
+  box-shadow:0 12px 28px rgba(0,0,0,.25)
+}
+.foodcartbar.on{display:flex}
+.foodcartbar .grow{flex:1;min-width:0}
+.foodcartbar b{font-size:11.5px;display:block}
+.foodcartbar small{font-size:9px;color:#AEB3BC;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.foodcartbar button{height:39px;border:0;border-radius:11px;background:#FFE500;color:#002B84;padding:0 13px;font-size:10px;font-weight:950}
+.delivery-title{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.delivery-title b{font-size:12px}.delivery-title button{border:0;background:none;color:var(--blue);font-size:9.5px;font-weight:900}
+.delivery-grid{display:grid;gap:8px;margin-top:8px}
+.delivery-option{
+  display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+  border:1px solid #E7EAF0;border-radius:14px;padding:10px 11px;background:#fff
+}
+.delivery-option.on{border:2px solid #2874F0;background:#F4F8FF;padding:9px 10px}
+.delivery-option .dname{font-size:11.5px;font-weight:900}
+.delivery-option .dsub{font-size:9px;color:#777E89;margin-top:3px}
+.delivery-option .dfee{font-size:13px;font-weight:950;color:#101114}
+.delivery-option .radio{display:inline-block;width:15px;height:15px;border-radius:50%;border:2px solid #BAC0CA;margin-right:6px;vertical-align:-3px}
+.delivery-option.on .radio{border:5px solid #2874F0}
+.econbox{margin-top:10px;border:1px dashed #D3D8E1;background:#FAFBFD;border-radius:13px;padding:10px}
+.econbox .eh{font-size:10px;font-weight:900;color:#173D7A;margin-bottom:7px}
+.econrow{display:grid;grid-template-columns:1.25fr .55fr .7fr .65fr;gap:5px;font-size:8.7px;padding:5px 0;border-top:1px solid #ECEEF2}
+.econrow.head{font-weight:900;color:#6B7280;border-top:0;padding-top:0}
+.econrow .neg{color:#C73545}.econrow .pos{color:#0D8B62;font-weight:900}
+.coins-checkout{margin-top:10px;padding:10px 11px;border-radius:13px;background:#FFF9E5;border:1px solid #F1D66C}
+.coins-checkout b{font-size:10.8px;color:#624900}
+.coins-checkout small{display:block;font-size:8.9px;line-height:1.35;color:#7F6B2F;margin-top:3px}
+.order-summary{margin-top:10px;border-top:1px solid #ECEEF2;padding-top:8px}
+.order-summary .line{display:flex;justify-content:space-between;font-size:10px;color:#666D78;padding:4px 0}
+.order-summary .line.total{font-size:12px;color:#111318;font-weight:950;border-top:1px solid #ECEEF2;margin-top:4px;padding-top:8px}
+.reward-rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 15px 0}
+.reward-rule{background:#fff;border:1px solid #ECEEF2;border-radius:14px;padding:10px}
+.reward-rule b{font-size:10.7px;display:block}.reward-rule small{font-size:8.8px;color:#757B86;display:block;margin-top:3px;line-height:1.35}
+.modelcard{margin:10px 15px 0;padding:11px;border-radius:15px;background:#F3F7FF;border:1px solid #DDE8FF}
+.modelcard b{font-size:10.8px;color:#173D7A}.modelcard small{display:block;font-size:8.7px;color:#63728A;line-height:1.4;margin-top:4px}
+
+
+/* ===== V17: Uni Pass + Black Pass + shared Crave Wallet + flexible Planner/Tiffin ===== */
+.walletcard{
+  margin:12px 15px 0;padding:13px 14px;border-radius:17px;
+  background:linear-gradient(135deg,#173D7A,#0A2D63);color:#fff;
+  display:flex;align-items:center;gap:11px;box-shadow:0 8px 22px rgba(0,43,132,.14)
+}
+.walleticon{width:42px;height:42px;border-radius:13px;background:#FFE500;color:#002B84;display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+.walletcard .grow{flex:1;min-width:0}.walletcard b{font-size:12.5px;display:block}.walletcard .bal{font-size:20px;font-weight:950;margin-top:2px}.walletcard small{display:block;font-size:8.8px;color:rgba(255,255,255,.68);margin-top:2px}
+.walletcard button{height:34px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;border-radius:10px;padding:0 10px;font-size:9px;font-weight:900}
+.passgrid{display:grid;gap:10px;padding:12px 15px 0}
+.passcard{border-radius:19px;padding:15px;position:relative;overflow:hidden}
+.passcard h3{font-size:19px;margin:4px 0 0;letter-spacing:-.45px}.passcard p{font-size:9.6px;line-height:1.4;margin:7px 0 0;max-width:250px}.passcard .ptag{display:inline-block;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.passcard .pprice{position:absolute;right:14px;top:14px;font-size:18px;font-weight:950}.passcard button{height:37px;border:0;border-radius:999px;padding:0 14px;font-size:10px;font-weight:900;margin-top:12px}
+.unipass{background:linear-gradient(135deg,#EEF4FF,#DCE9FF);border:1px solid #BDD4FF;color:#173D7A}.unipass .ptag{color:#2874F0}.unipass button{background:#2874F0;color:#fff}
+.blackpass{background:linear-gradient(135deg,#111318,#282B35);color:#fff;border:1px solid #333640}.blackpass .ptag{color:#FFE500}.blackpass p{color:#C9CCD3}.blackpass button{background:#FFE500;color:#111318}
+.passbenefits{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.passbenefits span{font-size:8.8px;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.05)}.blackpass .passbenefits span{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.08);color:#E4E6EB}
+.planner-config{margin:12px 15px 0;background:#fff;border:1px solid #E7EAF0;border-radius:17px;padding:12px}
+.planner-config .row{display:flex;align-items:center;justify-content:space-between;gap:10px}.planner-config b{font-size:12px}.planner-config small{font-size:8.8px;color:#7B818C;display:block;margin-top:2px}
+.daycount{display:flex;gap:6px}.daycount button{height:34px;min-width:42px;border:1px solid #DDE2EA;background:#fff;color:#626A76;border-radius:9px;font-size:9.5px;font-weight:900}.daycount button.on{background:#173D7A;color:#fff;border-color:#173D7A}
+.planner-partners{display:flex;gap:7px;overflow:auto;margin-top:10px;scrollbar-width:none}.planner-partners::-webkit-scrollbar{display:none}.planner-partner{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid #ECEEF2;border-radius:999px;background:#FAFBFD;font-size:8.8px;font-weight:800}.planner-partner img{width:20px;height:20px;border-radius:6px;background:#fff;padding:2px;object-fit:contain}
+.flexdays{display:grid;gap:9px;padding:12px 15px 0}.flexday{background:#fff;border:1px solid #E8EAF0;border-radius:16px;padding:11px}.flexdayhead{display:flex;align-items:center;justify-content:space-between}.flexdayhead b{font-size:11.5px}.flexdayhead button{height:31px;border:1px solid #2874F0;background:#fff;color:#2874F0;border-radius:9px;padding:0 9px;font-size:8.8px;font-weight:900}
+.plannedmeal{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid #F0F1F4}.plannedmeal img{width:42px;height:42px;border-radius:9px;object-fit:cover}.plannedmeal .grow{flex:1;min-width:0}.plannedmeal b{font-size:10.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.plannedmeal small{font-size:8.6px;color:#777D87}.plannedmeal button{height:28px;border:0;background:#FFF1F2;color:#C13E4B;border-radius:8px;font-size:8.4px;font-weight:900;padding:0 8px}
+.planner-meals{display:grid;gap:7px;margin-top:10px}.planner-option{display:flex;align-items:center;gap:9px;border:1px solid #E8EAF0;border-radius:13px;padding:8px;background:#fff}.planner-option img.food{width:50px;height:47px;border-radius:10px;object-fit:cover}.planner-option .grow{flex:1;min-width:0}.planner-option b{font-size:10.5px;display:block}.planner-option small{font-size:8.6px;color:#777D87}.planner-option button{height:31px;border:1px solid #2874F0;background:#fff;color:#2874F0;border-radius:8px;padding:0 8px;font-size:8.5px;font-weight:900}
+.timepick{width:100%;height:42px;border:1px solid #DDE1E8;border-radius:10px;padding:0 10px;margin-top:9px;background:#fff}
+.tiffinpartner{background:#fff;border:1px solid #ECEEF2;border-radius:18px;overflow:hidden}.tiffintop{display:flex;gap:10px;padding:11px}.tiffinphoto{width:80px;height:72px;border-radius:13px;background:#FFF4EA;display:grid;place-items:center;font-size:34px}.tiffintop .grow{flex:1;min-width:0}.tiffintop b{font-size:12.5px}.tiffintop small{display:block;font-size:9px;color:#777D87;margin-top:3px;line-height:1.35}.free-delivery{display:inline-block;margin-top:6px;background:#ECF9F3;color:#0C7F59;border:1px solid #CFECDC;padding:4px 7px;border-radius:999px;font-size:8.5px;font-weight:900}
+.tiffinplans{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px 11px}.tplan{border:1px solid #ECEEF2;border-radius:12px;padding:8px;background:#FAFBFD;text-align:left}.tplan b{font-size:9.5px;display:block}.tplan strong{font-size:12px;display:block;margin-top:4px}.tplan small{font-size:7.9px;color:#777D87;display:block;margin-top:3px}
+.active-sub{margin:10px 15px 0;padding:12px;border-radius:15px;background:#F1FBF6;border:1px solid #D4EDDF}.active-sub b{font-size:11px;color:#17634E}.active-sub small{display:block;font-size:8.8px;color:#5E756B;margin-top:3px}.active-sub button{height:34px;border:1px solid #D9A13D;background:#fff;color:#8C650E;border-radius:9px;margin-top:8px;padding:0 10px;font-size:8.8px;font-weight:900}
+.wallet-use{margin-top:10px;padding:10px;border-radius:12px;background:#F2F6FD;border:1px solid #DDE7F7;display:flex;align-items:center;gap:9px}.wallet-use .grow{flex:1}.wallet-use b{font-size:10.3px}.wallet-use small{display:block;font-size:8.6px;color:#6E7783;margin-top:2px}.wallet-use button{height:32px;border:1px solid #2874F0;background:#fff;color:#2874F0;border-radius:9px;padding:0 10px;font-size:8.5px;font-weight:900}
+
+
+/* ===== V18 VISUAL / TYPOGRAPHY RESET ===== */
+:root{--fs-xs:10px;--fs-sm:11.5px;--fs-md:13px;--fs-lg:15px;--fs-xl:22px}
+.tab{font-size:9px!important;line-height:1.08!important;word-break:break-word!important;padding:0 2px!important}
+.searchbar{font-size:12px!important}
+.banner .kicker{font-size:10px!important}
+.banner h2{font-size:21px!important;line-height:1.04!important;max-width:220px!important}
+.banner p{font-size:10.5px!important;line-height:1.3!important;max-width:205px!important}
+.banner .cta{font-size:10px!important;height:35px!important;padding:0 12px!important}
+.chip{font-size:12px!important}
+.eyebrow{font-size:9.5px!important}
+.sechead h3{font-size:18px!important}
+.see{font-size:12px!important}
+.qcopy b{font-size:12px!important;line-height:1.18!important;white-space:normal!important}.qcopy small{font-size:9.4px!important}
+.restname{font-size:13px!important;line-height:1.18!important;white-space:normal!important;padding-right:4px}.meta{font-size:10px!important;flex-wrap:wrap!important}.price{font-size:11.5px!important}
+.pagehead h2{font-size:21px!important;letter-spacing:-.5px}.pagehead small{font-size:11px!important}
+.menuitem .itemcopy b{font-size:13px!important}.menuitem .itemcopy small{font-size:10.5px!important}.itemfoot strong{font-size:13px!important}
+.add{font-size:11px!important;height:38px!important}
+.bottom .nav{font-size:9px!important}.bottom .nav .ico{font-size:18px!important}
+
+/* Shared cards */
+.walletcard{padding:15px 16px!important}
+.walletcard b{font-size:12px!important}.walletcard .bal{font-size:20px!important}.walletcard small{font-size:9px!important;line-height:1.24!important}
+.walletcard button{font-size:10px!important}
+.passcard{padding:14px!important;min-height:156px}
+.passcard h3{font-size:19px!important}.passcard p{font-size:10px!important;line-height:1.28!important;max-width:215px!important}
+.passcard .ptag{font-size:9.5px!important}.passbenefits span{font-size:10px!important;padding:6px 8px!important}
+.passcard button{font-size:11px!important;height:40px!important}
+.reward-rule b{font-size:12px!important}.reward-rule small{font-size:10px!important}
+.modelcard b{font-size:12px!important}.modelcard small{font-size:10px!important}
+
+/* Visual Planner */
+.planner-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 15px 0}
+.pstep{background:#fff;border:1px solid #E7EAF0;border-radius:15px;padding:10px 8px;text-align:center}
+.pstep .ico{width:36px;height:36px;border-radius:12px;margin:auto;background:#EEF4FF;color:#2874F0;display:grid;place-items:center;font-size:18px}
+.pstep b{display:block;font-size:9.8px;margin-top:6px}.pstep small{display:block;font-size:8.2px;color:#858B95;margin-top:2px;line-height:1.18}
+.planner-config{padding:14px!important}.planner-config b{font-size:13px!important}.planner-config small{font-size:10px!important}
+.daycount button{height:38px!important;min-width:50px!important;font-size:10px!important}
+.planner-partner{font-size:10px!important;padding:7px 9px!important}.planner-partner img{width:23px!important;height:23px!important}
+.flexday{padding:13px!important;border-radius:17px!important}.flexdayhead b{font-size:13px!important}.flexdayhead button{height:35px!important;font-size:10px!important}
+.plannedmeal{gap:10px!important}.plannedmeal img{width:50px!important;height:50px!important}.plannedmeal b{font-size:11.5px!important}.plannedmeal small{font-size:9.6px!important}.plannedmeal button{font-size:9.5px!important;height:31px!important}
+.empty-meal{margin-top:9px;border:1px dashed #DCE1E9;border-radius:13px;padding:12px;display:flex;align-items:center;gap:10px;background:#FBFCFE}
+.empty-meal .pic{width:44px;height:44px;border-radius:12px;background:#EEF4FF;color:#2874F0;display:grid;place-items:center;font-size:20px}
+.empty-meal b{font-size:11px;display:block}.empty-meal small{font-size:9.5px;color:#888E98;display:block;margin-top:2px}
+.planner-option b{font-size:11.5px!important}.planner-option small{font-size:9.5px!important}.planner-option button{font-size:9.5px!important;height:34px!important}
+.timepick{font-size:13px!important}
+
+/* Visual Tiffin */
+.tiffinhero{margin:12px 15px 0;border-radius:18px;background:linear-gradient(135deg,#FFF3EA,#FFE4D4);padding:14px;display:flex;align-items:center;gap:12px;border:1px solid #F3D5C5}
+.tiffinhero .art{width:58px;height:58px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:30px}
+.tiffinhero b{font-size:14px}.tiffinhero small{font-size:10px;color:#80513E;display:block;margin-top:3px;line-height:1.3}
+.tiffinpartner{border-radius:19px!important}.tiffintop{padding:13px!important}.tiffinphoto{width:72px!important;height:72px!important;font-size:33px!important}
+.tiffintop b{font-size:12.5px!important}.tiffintop small{font-size:9px!important;line-height:1.25!important}.free-delivery{font-size:8.5px!important;padding:4px 7px!important}
+.tiffinplans{gap:8px!important;padding:0 12px 13px!important}.tplan{padding:10px!important}.tplan b{font-size:10.5px!important}.tplan strong{font-size:14px!important}.tplan small{font-size:8.8px!important}
+.active-sub b{font-size:12px!important}.active-sub small{font-size:10px!important}
+
+/* Account/Rewards utility cards */
+.mini{padding:14px!important}.mini b{font-size:13px!important}.mini small{font-size:10px!important;line-height:1.35!important}
+
+
+/* ===== V21: account + passes redesign ===== */
+.account-hero{
+  margin:10px 15px 0;padding:16px;border-radius:24px;
+  background:linear-gradient(135deg,#173D7A 0%,#0C4FC4 100%);
+  color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 26px rgba(23,61,122,.18)
+}
+.account-hero:before{content:"";position:absolute;right:-30px;top:-26px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08)}
+.account-hero .row{display:flex;align-items:center;gap:12px}
+.account-hero .icon{
+  width:54px;height:54px;border-radius:18px;background:#FFE500;color:#173D7A;
+  display:grid;place-items:center;font-size:24px;font-weight:900;flex:0 0 auto
+}
+.account-hero b{font-size:14px;display:block}
+.account-hero .bal{font-size:28px;font-weight:950;letter-spacing:-.5px}
+.account-hero small{display:block;font-size:10px;color:rgba(255,255,255,.76);line-height:1.3;max-width:190px}
+.account-hero .openbtn{
+  margin-left:auto;height:42px;padding:0 15px;border-radius:14px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:900
+}
+.acc-list{padding:12px 15px 0;display:grid;gap:12px}
+.acc-tile{
+  background:#fff;border:1px solid #ECEEF2;border-radius:22px;padding:14px 15px;
+  display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(16,17,20,.03)
+}
+.acc-tile .aicon{
+  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;
+  font-size:18px
+}
+.acc-tile .atext{flex:1;min-width:0}
+.acc-tile .atext b{font-size:13px;display:block}
+.acc-tile .atext small{display:block;font-size:10px;color:#7D838E;line-height:1.3;margin-top:2px}
+.acc-tile .arrow{color:#A6ACB6;font-size:18px;font-weight:700}
+.pass-primary{
+  background:linear-gradient(135deg,#EEF5FF 0%,#DCEBFF 100%);border-color:#C7DBFF
+}
+.pass-primary .aicon{background:#fff3b0;color:#7A5B00}
+.pass-chipline{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.pass-chipline span{
+  font-size:8.8px;padding:4px 7px;border-radius:999px;background:#fff;border:1px solid #E2EBFB;color:#45618A
+}
+.status-tile .aicon{background:#F2ECFF;color:#6E42C1}
+.loc-tile .aicon{background:#FFF0F3;color:#D44A7A}
+.pass-sheet{
+  padding-top:8px
+}
+.pass-stack{display:grid;gap:12px;margin-top:10px}
+.pass-premium,.pass-student{
+  border-radius:24px;padding:18px;position:relative;overflow:hidden
+}
+.pass-student{
+  background:linear-gradient(135deg,#F5F9FF 0%,#E3EEFF 100%);border:1px solid #CFE0FF;color:#173D7A
+}
+.pass-premium{
+  background:linear-gradient(135deg,#111318 0%,#252936 100%);border:1px solid #2F3340;color:#fff
+}
+.pass-ribbon{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+  font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em
+}
+.pass-student .pass-ribbon{background:#fff;color:#2874F0;border:1px solid #D9E7FF}
+.pass-premium .pass-ribbon{background:rgba(255,229,0,.12);color:#FFE500;border:1px solid rgba(255,229,0,.18)}
+.pass-title{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:12px}
+.pass-title h3{margin:0;font-size:24px;letter-spacing:-.6px}
+.pass-title .price{
+  font-size:24px;font-weight:950;letter-spacing:-.8px
+}
+.pass-sub{font-size:11px;line-height:1.38;margin-top:6px;max-width:250px}
+.benefit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.benefit{
+  background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.05);border-radius:16px;padding:10px
+}
+.pass-premium .benefit{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+.benefit b{display:block;font-size:11.5px}
+.benefit small{display:block;font-size:9px;line-height:1.28;margin-top:3px;color:#6F7785}
+.pass-premium .benefit small{color:#C5CAD3}
+.pass-cta{display:flex;gap:10px;margin-top:15px}
+.pass-cta button{
+  flex:1;height:42px;border-radius:14px;border:0;font-size:11px;font-weight:900
+}
+.pass-student .pass-cta .primaryx{background:#2874F0;color:#fff}
+.pass-student .pass-cta .secondaryx{background:#fff;color:#2874F0;border:1px solid #CFE0FF}
+.pass-premium .pass-cta .primaryx{background:#FFE500;color:#111318}
+.pass-premium .pass-cta .secondaryx{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.12)}
+
+
+/* ===== V22: open-ended Planner duration ===== */
+.planlength-box{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:12px
+}
+.planlength-copy b{font-size:13px;display:block}
+.planlength-copy small{font-size:10px;color:#7C838E;display:block;margin-top:2px}
+.daystepper{
+  display:flex;align-items:center;gap:7px;background:#F5F7FB;border:1px solid #E2E6ED;
+  padding:4px;border-radius:13px
+}
+.daystepper button{
+  width:34px;height:34px;border:0;border-radius:9px;background:#fff;color:#2874F0;
+  font-size:18px;font-weight:900;box-shadow:0 1px 2px rgba(0,0,0,.04)
+}
+.daystepper button:disabled{color:#C7CBD3;background:#F7F8FA}
+.daystepper .count{
+  min-width:54px;text-align:center;color:#173D7A;font-size:11px;font-weight:950
+}
+.partner-note{
+  display:flex;align-items:center;gap:7px;margin-top:10px;padding:8px 9px;
+  border-radius:11px;background:#F8FAFD;border:1px solid #E9EDF4;
+  color:#5F6875;font-size:9.3px;line-height:1.3
+}
+.partner-note .ico{
+  width:25px;height:25px;border-radius:8px;background:#EAF2FF;color:#2874F0;
+  display:grid;place-items:center;flex:0 0 auto;font-size:12px
+}
+.day-controls{
+  display:flex;justify-content:center;padding:12px 15px 0
+}
+.add-day-wide{
+  width:100%;height:43px;border:1.5px dashed #9DBDF8;border-radius:13px;background:#F8FBFF;
+  color:#2874F0;font-size:10.5px;font-weight:900
+}
+.remove-last{
+  display:block;margin:8px auto 0;border:0;background:none;color:#A26A6A;
+  font-size:9.5px;font-weight:800
+}
+
+
+/* ===== V23: official-style SuperCoins page ===== */
+.sc-header-card{
+  margin:12px 15px 0;border-radius:24px;overflow:hidden;
+  background:linear-gradient(135deg,#0F1218 0%,#1C2230 58%,#242C3E 100%);
+  color:#fff;position:relative;padding:18px 18px 16px;box-shadow:0 10px 26px rgba(0,0,0,.12)
+}
+.sc-header-card:before{
+  content:"";position:absolute;right:-22px;top:-24px;width:108px;height:108px;border-radius:50%;
+  background:rgba(255,229,0,.08)
+}
+.sc-toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sc-pill{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;
+  background:rgba(255,255,255,.08);font-size:10px;font-weight:900
+}
+.sc-pill img{width:18px;height:18px;border-radius:50%}
+.sc-balance-label{font-size:11px;color:rgba(255,255,255,.72);margin-top:8px}
+.sc-balance{font-size:36px;font-weight:950;letter-spacing:-1px;color:#FFE500;margin-top:2px}
+.sc-sub{font-size:10px;color:rgba(255,255,255,.74);line-height:1.35;max-width:250px;margin-top:6px}
+.sc-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 15px 0
+}
+.sc-mini{
+  background:#fff;border:1px solid #ECEEF2;border-radius:20px;padding:14px 13px;min-height:104px
+}
+.sc-mini .big{font-size:24px;font-weight:950;color:#173D7A;letter-spacing:-.5px}
+.sc-mini b{display:block;font-size:11.8px;margin-top:4px}
+.sc-mini small{display:block;font-size:9.5px;color:#757D89;line-height:1.3;margin-top:4px}
+.sc-section{
+  margin:12px 15px 0;background:#fff;border:1px solid #ECEEF2;border-radius:22px;padding:14px
+}
+.sc-section-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sc-icon{
+  width:38px;height:38px;border-radius:14px;display:grid;place-items:center;flex:0 0 auto;font-size:17px
+}
+.sc-section-head b{font-size:13px;display:block}
+.sc-section-head small{display:block;font-size:9.6px;color:#7B838F;margin-top:2px}
+.sc-list{display:grid;gap:8px}
+.sc-row{
+  display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-top:1px solid #F1F3F6
+}
+.sc-row:first-child{border-top:0;padding-top:0}
+.sc-dot{
+  width:22px;height:22px;border-radius:8px;background:#F4F7FC;color:#173D7A;
+  display:grid;place-items:center;font-size:10px;font-weight:900;flex:0 0 auto
+}
+.sc-row b{font-size:10.8px;display:block}
+.sc-row small{display:block;font-size:9.2px;color:#78808C;line-height:1.35;margin-top:2px}
+.sc-usegrid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px
+}
+.sc-use{
+  border:1px solid #ECEEF2;border-radius:16px;padding:11px;background:#FAFBFD
+}
+.sc-use b{display:block;font-size:10.8px}
+.sc-use small{display:block;font-size:9px;color:#7A818D;line-height:1.3;margin-top:3px}
+
+
+/* ===== V24: bottom nav refinement ===== */
+.bottom{
+  background:rgba(255,255,255,.98)!important;
+  border-top:1px solid #E8EBF0!important;
+  grid-template-columns:repeat(5,1fr)!important;
+  padding:2px 2px 4px!important
+}
+.nav{
+  gap:4px!important;
+  color:#8D95A3!important;
+  font-size:9px!important;
+  font-weight:800!important;
+  letter-spacing:-.1px!important
+}
+.nav .ico{
+  width:24px;height:24px;display:grid;place-items:center;
+  font-size:0!important;position:relative
+}
+.nav .ico svg{
+  width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round
+}
+.nav.on{color:#2874F0!important;font-weight:900!important}
+.nav span:last-child{line-height:1.05!important}
+.reelsnav{
+  position:relative;transform:translateY(-2px)
+}
+.reelsnav span:last-child{
+  color:#808896!important;font-weight:800!important
+}
+.reelsnav .orb{
+  width:44px!important;height:44px!important;border-radius:16px!important;
+  box-shadow:0 8px 20px rgba(40,116,240,.26)!important;
+  border:3px solid #fff!important;
+  font-size:0!important;position:relative
+}
+.reelsnav .orb:before{
+  content:"";position:absolute;left:16px;top:12px;
+  width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:13px solid #fff
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+ <div class="screen" id="screen"></div>
+ <div class="foodcartbar" id="foodcartbar"><div class="grow"><b id="foodcarttitle">1 item</b><small id="foodcartsub">Choose delivery at checkout</small></div><button onclick="openFoodCart()">View cart</button></div>
+ <div class="bottom" id="bottom"></div>
+ <div class="overlay" id="sheetbg" onclick="closeSheet()"></div>
+ <div class="sheet" id="sheet"><div id="sheetbody"></div></div>
+ <div class="player" id="player"><button class="pclose" onclick="closeReel()">✕</button><div id="playerbody" style="height:100%"></div></div>
+ <div class="toast" id="toast"></div>
+</div>
+<script>
+"use strict";
+
+const IMG={
+ burger:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=82",
+ pizza:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=82",
+ coffee:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=82",
+ wrap:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=82",
+ chicken:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=700&q=82",
+ bowl:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=82",
+ dosa:"https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=700&q=82",
+ biryani:"https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=700&q=82",
+ chai:"https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=700&q=82"
+};
+const fav=d=>"https://www.google.com/s2/favicons?domain="+d+"&sz=128";
+const DELIVERY={
+ eco:{id:"eco",name:"Eco",fee:9,batch:3.0,inner:21.00,outer:25.73,cost:22.65,margin:-13.65,sub:"Best value · grouped marketplace route"},
+ scheduled:{id:"scheduled",name:"Eco Scheduled",fee:9,batch:3.5,inner:20.14,outer:22.48,cost:20.96,margin:-11.96,sub:"Built for Planner & Tiffin pre-orders"},
+ standard:{id:"standard",name:"Standard",fee:38,batch:1.6,inner:29.79,outer:45.61,cost:35.33,margin:2.67,sub:"Smaller batch · regular dispatch"},
+ bites:{id:"bites",name:"Bites",fee:67,batch:1.0,inner:45.86,outer:71.18,cost:54.72,margin:12.28,sub:"Bites QSR lane"}
+};
+
+const R=[
+{id:"mcd",n:"McDonald's",a:"BTM Layout",c:"Burgers, wraps, fries",rt:"4.4",bite:true,img:IMG.burger,logo:fav("mcdelivery.co.in"),items:[["m1","McAloo Tikki Burger",79,IMG.burger,true],["m2","McChicken Burger",159,IMG.burger,true],["m3","McVeggie Burger",159,IMG.burger,false]]},
+{id:"dom",n:"Domino's Pizza",a:"Koramangala",c:"Pizza, garlic bread",rt:"4.3",bite:true,img:IMG.pizza,logo:fav("dominos.co.in"),items:[["d1","Pizza Mania Classic",49,IMG.pizza,true],["d2","Pizza Mania Onion",69,IMG.pizza,true],["d3","Garlic Breadsticks",119,IMG.pizza,true]]},
+{id:"kfc",n:"KFC",a:"New BEL Road",c:"Burgers, fried chicken",rt:"4.3",bite:true,img:IMG.chicken,logo:fav("online.kfc.co.in"),items:[["k1","Spicy Zinger Burger",259,IMG.burger,true],["k2","Zinger Pro Burger",289,IMG.burger,true],["k3","Veg Zinger",269,IMG.burger,false]]},
+{id:"bk",n:"Burger King",a:"Koramangala",c:"Burgers, American",rt:"4.0",bite:true,img:IMG.burger,logo:fav("burgerking.in"),items:[["b1","Original Whopper Veg",189,IMG.burger,true],["b2","Crispy Veg Burger",70,IMG.burger,true],["b3","Crispy Chicken Burger",99,IMG.burger,true]]},
+{id:"bt",n:"Blue Tokai",a:"Koramangala",c:"Coffee, cafe",rt:"4.5",bite:true,img:IMG.coffee,logo:fav("bluetokaicoffee.com"),items:[["bt1","Iced Espresso",230,IMG.coffee,true],["bt2","Iced Latte",295,IMG.coffee,true],["bt3","Cappuccino",260,IMG.coffee,false]]},
+{id:"tw",n:"Third Wave Coffee",a:"HSR Layout",c:"Coffee, beverages",rt:"4.4",bite:true,img:IMG.coffee,logo:fav("thirdwavecoffeeroasters.com"),items:[["tw1","Hot Chocolate",249,IMG.coffee,true],["tw2","Classic Cold Coffee",305,IMG.coffee,true]]},
+{id:"cp",n:"Chai Point",a:"Koramangala",c:"Chai, bakery",rt:"4.4",bite:true,img:IMG.chai,logo:fav("chaipoint.com"),items:[["cp1","Ginger Chai Flask",139,IMG.chai,true],["cp2","Cutting Chai Flask",139,IMG.chai,true]]},
+{id:"fa",n:"Faasos",a:"BTM",c:"Wraps, rolls",rt:"4.3",bite:true,img:IMG.wrap,logo:fav("faasos.com"),items:[["f1","Chipotle Aloo Wrap",139,IMG.wrap,true],["f2","Chicken Patty Wrap",169,IMG.wrap,true]]},
+{id:"cb",n:"California Burrito",a:"Indiranagar",c:"Bowls, burritos",rt:"4.6",bite:true,img:IMG.bowl,logo:fav("californiaburrito.in"),items:[["c1","BBQ Chicken Rice Bowl",329,IMG.bowl,true],["c2","Veg Rice Bowl",259,IMG.bowl,true]]},
+{id:"ram",n:"The Rameshwaram Cafe",a:"Malleshwaram",c:"South Indian",rt:"4.6",bite:false,img:IMG.dosa,logo:fav("therameshwaramcafe.org"),items:[["r1","Ghee Pudi Idli",150,IMG.dosa,false],["r2","Ghee Idli",120,IMG.dosa,false],["r3","Ghee Pudi Plain Dosa",180,IMG.dosa,false]]},
+{id:"meg",n:"Meghana Foods",a:"Koramangala",c:"Biryani, Andhra",rt:"4.6",bite:false,img:IMG.biryani,logo:fav("meghanafoods.co.in"),items:[["mg1","Chicken Biryani",365,IMG.biryani,false],["mg2","Chicken Boneless Biryani",375,IMG.biryani,false]]},
+{id:"tr",n:"Truffles",a:"Koramangala",c:"Burgers, cafe",rt:"4.6",bite:false,img:IMG.burger,logo:fav("truffles.co.in"),items:[["t1","Veg Burger",171,IMG.burger,false],["t2","Cottage Cheese Burger",190,IMG.burger,false]]}
+];
+const ITEM={};R.forEach(r=>r.items.forEach(i=>ITEM[i[0]]={id:i[0],n:i[1],p:i[2],img:i[3],bite:i[4],r:r.id}));
+
+const PLANNER_PARTNERS=["mcd","bt","fa","cb","ram","meg"];
+const TIFFIN_PARTNERS=[
+ {id:"sharda",name:"Sharda Tiffin Service",type:"Pure veg",rating:"4.5",icon:"🍱",menu:"Poha & chai · Dal, rice, sabzi, roti · Rajma chawal",terms:"Cancellation/refund follows Sharda Tiffin Service terms.",plans:[
+   {id:"w1",name:"1 Week",days:7,total:2800},{id:"d15",name:"15 Days",days:15,total:6000},{id:"d30",name:"30 Days",days:30,total:12000}
+ ]},
+ {id:"annapurna",name:"Annapurna Mess",type:"Veg & egg",rating:"4.3",icon:"🥘",menu:"Idli & chutney · Veg thali · Khichdi & curd",terms:"Cancellation/refund follows Annapurna Mess terms.",plans:[
+   {id:"w1",name:"1 Week",days:7,total:2800},{id:"d15",name:"15 Days",days:15,total:6000},{id:"d30",name:"30 Days",days:30,total:12000}
+ ]}
+];
+
+const REELS=[
+{r:"mcd",i:"m1",title:"McAloo Tikki",vid:"https://www.pexels.com/download/video/5907167/",credit:"Pexels · Katerina Holmes"},
+{r:"dom",i:"d1",title:"Pizza Mania",vid:"https://videos.pexels.com/video-files/5792352/5792352-hd_1080_1920_30fps.mp4",credit:"Pexels · Nataliya Vaitkevich"},
+{r:"kfc",i:"k1",title:"Zinger",vid:"https://videos.pexels.com/video-files/6689961/6689961-uhd_2160_3840_24fps.mp4",credit:"Pexels · Tim Samuel"},
+{r:"bt",i:"bt2",title:"Iced Latte",vid:"https://videos.pexels.com/video-files/7930821/7930821-uhd_2160_3840_24fps.mp4",credit:"Pexels · Nicola Barts"},
+{r:"fa",i:"f2",title:"Faasos Wrap",vid:"https://www.pexels.com/download/video/7601356/",credit:"Pexels · Los Muertos Crew"}
+];
+
+const MINUTES=[
+{id:"mm1",n:"Amul Taaza Milk",q:"500 ml",p:29,e:"🥛"},
+{id:"mm2",n:"Brown Bread",q:"400 g",p:55,e:"🍞"},
+{id:"mm3",n:"Farm Eggs",q:"6 pcs",p:72,e:"🥚"},
+{id:"mm4",n:"Bananas",q:"6 pcs",p:48,e:"🍌"},
+{id:"mm5",n:"Potato Chips",q:"1 pack",p:40,e:"🥔"},
+{id:"mm6",n:"Soft Drink",q:"750 ml",p:45,e:"🥤"},
+{id:"mm7",n:"Instant Noodles",q:"4 pack",p:60,e:"🍜"},
+{id:"mm8",n:"Chocolate",q:"1 bar",p:50,e:"🍫"}
+];
+
+let S={page:"home",top:"market",filter:"All",rest:null,mode:"all",coins:489,wallet:1500,useWallet:false,uniVerified:false,cart:{},foodCart:{},foodRest:null,delivery:"eco",plannerDays:3,plannerMeals:{},tiffinPartner:null,tiffinSub:null,plan:{book:{}}};
+const rest=id=>R.find(x=>x.id===id),item=id=>ITEM[id],money=x=>"₹"+x.toLocaleString("en-IN");
+function logo(r){return `<img class="brandlogo" src="${r.logo}" alt="${r.n}" onerror="this.style.visibility='hidden'">`}
+
+/* TOP OF APP — intentionally kept unchanged */
+function header(){return `<div class="top"><div class="toprow"><div class="brand">Flipkart <span>Food</span></div><div class="loc"><b>Bengaluru</b><small>Koramangala · change</small></div><div class="coin" onclick="go('rewards')"><img src="https://supercoins.magnify.club/supercoin-icon.webp" alt="Flipkart SuperCoin">${S.coins}</div></div><div class="tabs">${[["market","Crave"],["planner","Planner"],["tiffin","Tiffin"],["minutes","Minutes"]].map(x=>`<button class="tab ${S.top===x[0]?"on":""}" onclick="topGo('${x[0]}')">${x[1]}</button>`).join("")}</div></div>`}
+function topGo(x){S.top=x;if(x==="market")go("home");else if(x==="planner")go("planner");else if(x==="tiffin")go("tiffin");else if(x==="minutes")go("minutes")}
+function go(p){S.page=p;if(p==="home"||p==="bites"||p==="restaurant")S.top="market";if(p==="planner")S.top="planner";if(p==="tiffin")S.top="tiffin";if(p==="minutes")S.top="minutes";screen.scrollTop=0;render()}
+
+/* ONLY EDITED HOME AREA */
+function promo(){
+ const q=R.filter(r=>r.bite);
+ const studentSvg=`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M7 24 32 12l25 12-25 12L7 24Z" fill="#173D7A"/><path d="M18 31v12c7 7 21 7 28 0V31l-14 7-14-7Z" fill="#2874F0"/><path d="M54 27v15" stroke="#173D7A" stroke-width="4" stroke-linecap="round"/><circle cx="54" cy="46" r="4" fill="#FFC200"/></svg>`;
+ return `<div class="promo"><div id="promorail" class="promorail">
+  <div class="banner b1" onclick="go('rewards')">
+   <div class="kicker"><span class="spark">✦</span> SuperCoins on food</div>
+   <h2>4% back + weekly streaks</h2>
+   <p>Earn up to 40 SC/order · get +15 SC after 3 food orders in a week.</p>
+   <button class="cta">See Rewards</button>
+   <div class="visual coinart"></div>
+  </div>
+  <div class="banner b2" onclick="topGo('planner')">
+   <div class="kicker"><span class="spark">▦</span> Crave Planner</div>
+   <h2>Smart Meal Pre-Booking</h2>
+   <p>Plan meals at any time · minimum 3 days.</p>
+   <button class="cta">Start Planning</button>
+   <div class="visual calendar"><div class="head"></div><div class="grid">${Array(12).fill("<i></i>").join("")}</div></div>
+  </div>
+  <div class="banner b3" onclick="topGo('tiffin')">
+   <div class="kicker"><span class="spark">◈</span> Crave Tiffin</div>
+   <h2>Homestyle Mess & Tiffin</h2>
+   <p>Taste First ₹129–149 · then choose 7, 15 or 30 days.</p>
+   <button class="cta">View Plans</button>
+   <div class="visual tiffinart"><div class="plate"></div></div>
+  </div>
+  <div class="banner b4" onclick="go('bites')">
+   <div class="kicker"><span class="spark">◆</span> Bites · inside Crave</div>
+   <h2>Craving your QSR favourites?</h2>
+   <p>Curated Bites menus from brands you already know.</p>
+   <button class="cta">Explore Bites</button>
+   <div class="visual bite-logos">${q.slice(0,6).map(r=>`<img src="${r.logo}" alt="${r.n}" onerror="this.style.visibility='hidden'">`).join("")}</div>
+  </div>
+  <div class="banner b5" onclick="go('passes')">
+   <div class="kicker"><span class="spark">★</span> Uni Pass</div>
+   <h2>₹0 pass for university students</h2>
+   <p>Student-ID gated · free delivery above ₹99 · 10% SuperCoins.</p>
+   <button class="cta">View Uni Pass</button>
+   <div class="visual studentart">${studentSvg}</div>
+  </div>
+ </div><div id="dots" class="dots">${[0,1,2,3,4].map((_,i)=>`<i class="${i===0?"on":""}"></i>`).join("")}</div></div>`;
+}
+
+function home(){
+ let list=R;
+ if(S.filter==="Bites")list=R.filter(r=>r.bite);
+ if(S.filter==="Coffee")list=R.filter(r=>/coffee|chai/i.test(r.c));
+ if(S.filter==="Under ₹200")list=R.filter(r=>r.items.some(i=>i[2]<200));
+ if(S.filter==="South Indian")list=R.filter(r=>/south/i.test(r.c));
+ return header()+`<div class="searchbar" onclick="searchSheet()">⌕ Search dishes, restaurants, cuisines</div>${promo()}
+ <div class="chips">${["All","Bites","Under ₹200","Coffee","South Indian"].map(x=>`<button class="chip ${S.filter===x?"on":""}" onclick="S.filter='${x}';render()">${x}</button>`).join("")}</div>
+ <div class="sec"><div class="sechead"><div><div class="eyebrow">Swipe to discover</div><h3>Crave reels</h3></div><button class="see" onclick="openReel(0)">See all</button></div><div class="rail">${REELS.map((x,i)=>reelCard(x,i)).join("")}</div></div>
+ <div class="sec"><div class="sechead"><div><div class="eyebrow">Bites</div><h3>Branded favourites</h3></div><button class="see" onclick="go('bites')">See all</button></div><div class="rail">${R.filter(r=>r.bite).map(qcard).join("")}</div></div>
+ <div class="sec"><div class="sechead"><div><div class="eyebrow">Bengaluru</div><h3>Restaurants</h3></div></div><div class="restlist">${list.map(rcard).join("")}</div></div><div style="height:28px"></div>`;
+}
+
+function reelCard(x,i){
+ const r=rest(x.r),it=item(x.i);
+ return `<div class="reel" onclick="openReel(${i})"><video src="${x.vid}" autoplay muted loop playsinline preload="metadata" poster="${it.img}"></video><div class="shade"></div><div class="play">▶</div><div class="reelcopy"><b>${x.title}</b><small>${r.n}${it.bite?" · Bites":""}</small></div></div>`;
+}
+function qcard(r){return `<div class="qcard" onclick="openRest('${r.id}','bites')"><div class="qpic"><img src="${r.img}" alt="">${logo(r)}</div><div class="qcopy"><b>${r.n}</b><div style="margin-top:5px"><span class="bitesbadge">Bites</span></div><small>${r.a}</small></div></div>`}
+function rcard(r){
+ const low=Math.min(...r.items.map(i=>i[2]));
+ return `<div class="restcard" onclick="openRest('${r.id}')"><div class="restpic"><img src="${r.img}" alt="">${logo(r)}</div><div class="restcopy"><div class="restname">${r.n} ${r.bite?`<span class="bitesbadge">Bites</span>`:""}</div><div class="meta"><span class="rating">★ ${r.rt}</span><span>·</span><span>${r.a}</span></div><div class="meta">${r.c}</div><div class="price">from ${money(low)}</div></div></div>`;
+}
+
+/* Bites */
+function bites(){
+ const q=R.filter(r=>r.bite);
+ return header()+`<div class="pagehead"><button class="back" onclick="go('home')">‹</button><div><h2>Bites</h2><small>Curated QSR menus inside Crave</small></div></div>
+ <div class="chips">${["All","Burgers","Coffee","Wraps","Bowls"].map(x=>`<button class="chip ${S.filter===x?"on":""}" onclick="S.filter='${x}';render()">${x}</button>`).join("")}</div>
+ <div class="sec"><div class="sechead"><div><div class="eyebrow">Brands you know</div><h3>Bites partners</h3></div></div><div class="restlist">${q.filter(r=>{
+  if(S.filter==="All"||["Bites","Under ₹200","South Indian"].includes(S.filter))return true;
+  if(S.filter==="Burgers")return /burger/i.test(r.c);
+  if(S.filter==="Coffee")return /coffee|chai/i.test(r.c);
+  if(S.filter==="Wraps")return /wrap|roll/i.test(r.c);
+  if(S.filter==="Bowls")return /bowl|burrito/i.test(r.c);
+  return true;
+ }).map(rcard).join("")}</div></div>`;
+}
+function openRest(id,mode="all"){S.rest=id;S.mode=mode;go("restaurant")}
+function restaurant(){
+ const r=rest(S.rest||"mcd");
+ const shown=S.mode==="bites"?r.items.filter(i=>i[4]):r.items;
+ return header()+`<div class="pagehead"><button class="back" onclick="historyBack()">‹</button><div><h2>${r.n}</h2><small>${r.a}</small></div></div>
+ <div class="menuhero"><div class="menucover"><img class="food" src="${r.img}" alt=""><div class="menubrand"><img src="${r.logo}" alt="${r.n}"><span>${r.n}</span></div></div><div class="menumeta"><span>★ ${r.rt}</span><span>·</span><span>${r.c}</span>${r.bite?`<span class="bitesbadge">Bites</span>`:""}</div></div>
+ ${r.bite?`<div class="seg"><button class="${S.mode==="all"?"on":""}" onclick="S.mode='all';render()">Full menu</button><button class="${S.mode==="bites"?"on":""}" onclick="S.mode='bites';render()">Bites menu</button></div>`:""}
+ <div class="menuitems">${shown.map(i=>`<div class="menuitem"><div class="itemcopy"><b>${i[1]}</b><small>${i[4]?"Available in Bites":"Restaurant menu"}</small><div class="itemfoot"><strong>${money(i[2])}</strong><button class="add" onclick="addFoodCart('${i[0]}')">Add</button></div></div><div class="itemimg"><img src="${i[3]}" alt=""></div></div>`).join("")}</div>`;
+}
+function historyBack(){if(S.mode==="bites"){S.filter="All";go("bites")}else go("home")}
+
+/* Planner — meal planning at any time; minimum 3 days */
+function plannerPartnerStrip(){
+ return `<div style="font-size:9.5px;font-weight:900;color:#68717D;margin-bottom:6px">Participating restaurants</div><div class="planner-partners">${PLANNER_PARTNERS.map(id=>{const r=rest(id);return `<div class="planner-partner"><img src="${r.logo}" alt="${r.n}" onerror="this.style.visibility='hidden'">${r.n}</div>`}).join("")}</div>`;
+}
+function planner(){
+ return header()+`<div class="pagehead"><button class="back" onclick="go('home')">‹</button><div><h2>Crave Planner</h2><small>Plan across restaurants · minimum 3 days</small></div></div>
+ ${walletWidget()}
+ <div class="planner-steps">
+  <div class="pstep"><div class="ico">◫</div><b>Pick days</b><small>3 minimum</small></div>
+  <div class="pstep"><div class="ico">🍽</div><b>Mix meals</b><small>Across partners</small></div>
+  <div class="pstep"><div class="ico">◷</div><b>Pick time</b><small>Any slot</small></div>
+ </div>
+ <div class="planner-config">
+   <div class="planlength-box">
+     <div class="planlength-copy"><b>Plan length</b><small>Start at 3 days · add as many as you need</small></div>
+     <div class="daystepper">
+       <button onclick="plannerRemoveDay()" ${S.plannerDays<=3?"disabled":""}>−</button>
+       <div class="count">${S.plannerDays} days</div>
+       <button onclick="plannerAddDay()">+</button>
+     </div>
+   </div>
+   ${plannerPartnerStrip()}
+   <div class="partner-note"><div class="ico">↔</div><div>Planner is cross-restaurant: each meal can come from a different participating restaurant.</div></div>
+ </div>
+ <div class="flexdays">${Array.from({length:S.plannerDays},(_,day)=>plannerDay(day)).join("")}</div>
+ <div class="day-controls"><button class="add-day-wide" onclick="plannerAddDay()">＋ Add another day</button></div>
+ ${S.plannerDays>3?`<button class="remove-last" onclick="plannerRemoveDay()">Remove last day</button>`:""}
+ <div style="height:20px"></div>`;
+}
+function plannerAddDay(){
+ S.plannerDays+=1;
+ render();
+ requestAnimationFrame(()=>{screen.scrollTop=screen.scrollHeight});
+}
+function plannerRemoveDay(){
+ if(S.plannerDays<=3){toastMsg("Planner requires at least 3 days");return}
+ const lastDay=S.plannerDays-1;
+ const keys=Object.keys(S.plannerMeals).filter(k=>S.plannerMeals[k].day===lastDay);
+ if(keys.length){
+   openSheet(`<h3>Remove Day ${S.plannerDays}?</h3><p>This day already has ${keys.length} planned meal${keys.length>1?"s":""}. Remove the day and those meals?</p>
+    <button class="primary" onclick="plannerRemoveDayConfirm(${lastDay})">Remove day</button>
+    <button class="secondary" onclick="closeSheet()">Keep it</button>`);
+   return;
+ }
+ S.plannerDays-=1;render();
+}
+function plannerRemoveDayConfirm(lastDay){
+ Object.keys(S.plannerMeals).forEach(k=>{if(S.plannerMeals[k].day===lastDay)delete S.plannerMeals[k]});
+ S.plannerDays-=1;closeSheet();render();toastMsg("Last day removed");
+}
+function walletWidget(){
+ return `<div class="walletcard" onclick="go('wallet')"><div class="walleticon">₹</div><div class="grow"><b>Crave Wallet</b><div class="bal">${money(S.wallet)}</div><small>Planner + Tiffin wallet · also usable on normal food orders</small></div><button>Open</button></div>`;
+}
+function plannerDay(day){
+ const meals=Object.entries(S.plannerMeals).filter(([k,v])=>v.day===day).map(([k,v])=>({...v,key:k}));
+ return `<div class="flexday"><div class="flexdayhead"><b>Day ${day+1}</b><button onclick="plannerAddMeal(${day})">+ Add meal</button></div>
+ ${meals.length?meals.map(m=>plannedMealRow(m)).join(""):`<div class="empty-meal"><div class="pic">＋</div><div><b>No meal yet</b><small>Tap “Add meal” · choose food + time</small></div></div>`}</div>`;
+}
+function plannedMealRow(m){
+ const it=item(m.itemId),r=rest(it.r);
+ return `<div class="plannedmeal"><img src="${it.img}" alt=""><div class="grow"><b>${m.time} · ${it.n}</b><small>${r.n} · ${money(it.p)} · ${m.paidWallet?`paid from Wallet`:`regular payment`}</small></div><button onclick="plannerCancel('${m.key}')">Cancel</button></div>`;
+}
+function plannerAddMeal(day){
+ const options=PLANNER_PARTNERS.flatMap(rid=>{const r=rest(rid);return r.items.slice(0,2).map(i=>({id:i[0],name:i[1],price:i[2],img:i[3],r:r.id}))});
+ openSheet(`<h3>Day ${day+1} · Add meal</h3><p>Choose time → choose meal.</p>
+  <input id="plannerTime" class="timepick" type="time">
+  <div class="planner-meals">${options.map(o=>`<div class="planner-option"><img class="food" src="${o.img}" alt=""><div class="grow"><b>${o.name}</b><small>${rest(o.r).n} · ${money(o.price)}</small></div><button onclick="plannerChooseMeal(${day},'${o.id}')">Choose</button></div>`).join("")}</div>`);
+}
+function plannerChooseMeal(day,itemId){
+ const time=(document.getElementById("plannerTime")||{}).value;
+ if(!time){toastMsg("Choose a meal time first");return}
+ const it=item(itemId);
+ openSheet(`<h3>${it.n}</h3><p>Day ${day+1} · ${time} · ${rest(it.r).n}</p>
+  <div class="wallet-use"><div class="walleticon" style="width:34px;height:34px;font-size:14px">₹</div><div class="grow"><b>Crave Wallet · ${money(S.wallet)}</b><small>Wallet or regular payment.</small></div></div>
+  <button class="primary" onclick="plannerConfirm(${day},'${itemId}','${time}',true)">Pay ${money(it.p)} from Wallet</button>
+  <button class="secondary" onclick="plannerConfirm(${day},'${itemId}','${time}',false)">Use regular payment</button>`);
+}
+function plannerConfirm(day,itemId,time,useWallet){
+ const it=item(itemId);
+ if(useWallet&&S.wallet<it.p){toastMsg("Wallet balance is lower than this meal");return}
+ if(useWallet)S.wallet-=it.p;
+ const key="P"+Date.now();
+ S.plannerMeals[key]={day:day,time:time,itemId:itemId,paidWallet:useWallet};
+ closeSheet();render();toastMsg("Meal planned for Day "+(day+1));
+}
+function plannerCancel(key){
+ const m=S.plannerMeals[key],it=item(m.itemId);
+ openSheet(`<h3>Cancel planned meal?</h3><p>Cancel more than 24 hours before the scheduled meal for a full refund. Inside 24 hours, the restaurant policy applies.</p>
+  ${m.paidWallet?`<button class="primary" onclick="plannerCancelConfirm('${key}',${it.p})">Cancel before cut-off · refund ${money(it.p)} to Wallet</button>`:`<button class="primary" onclick="plannerCancelConfirm('${key}',0)">Cancel meal</button>`}
+  <button class="secondary" onclick="closeSheet()">Keep meal</button>`);
+}
+function plannerCancelConfirm(key,refund){
+ if(refund)S.wallet+=refund;
+ delete S.plannerMeals[key];closeSheet();render();toastMsg(refund?"Cancelled · refund added to Crave Wallet":"Meal cancelled");
+}
+
+function minutes(){
+ return header()+`<div class="minuteshero"><small>Flipkart Minutes</small><h2>Quick commerce, as usual.</h2><p>Everyday essentials in the same Flipkart Food shell. Tap Add to test the cart flow.</p></div>
+ <div class="sec"><div class="sechead"><div><div class="eyebrow">Minutes</div><h3>Everyday essentials</h3></div><button class="see" onclick="toastMsg(cartCount()+' item(s) in cart')">Cart · ${cartCount()}</button></div></div>
+ <div class="minutesgrid">${MINUTES.map(x=>`<div class="minprod"><div class="emoji">${x.e}</div><b>${x.n}</b><small>${x.q}</small><div class="mprice">${money(x.p)}</div><button class="madd" onclick="addCart('min:${x.id}','${x.n.replace(/'/g,"")}')">Add${S.cart['min:'+x.id]?' · '+S.cart['min:'+x.id]:''}</button></div>`).join("")}</div><div style="height:25px"></div>`;
+}
+
+
+
+/* Tiffin / rewards / orders / account — unchanged consumer flow */
+function tiffin(){
+ return header()+`<div class="pagehead"><button class="back" onclick="go('home')">‹</button><div><h2>Crave Tiffin</h2><small>Mess partner → plan → meals</small></div></div>
+ ${walletWidget()}
+ ${S.tiffinSub?activeTiffinSub():""}
+ <div class="tiffinhero"><div class="art">🍱</div><div><b>Home-style meal plans</b><small>Taste First ₹129–149 · then pick 1 week, 15 or 30 days · delivery included.</small></div></div>
+ <div class="plans">${TIFFIN_PARTNERS.map(tiffinPartnerCard).join("")}</div>`;
+}
+function tiffinPartnerCard(p){
+ return `<div class="tiffinpartner"><div class="tiffintop"><div class="tiffinphoto">${p.icon}</div><div class="grow"><b>${p.name}</b><small>★ ${p.rating} · ${p.type}<br>${p.menu}</small><span class="free-delivery">✓ Free delivery</span></div></div>
+  <div class="tiffinplans">${p.plans.map(pl=>`<div class="tplan" onclick="subscribeTiffin('${p.id}','${pl.id}')"><b>${pl.name}</b><strong>${money(pl.total)}</strong><small>${pl.days} days</small></div>`).join("")}</div></div>`;
+}
+function subscribeTiffin(partnerId,planId){
+ const p=TIFFIN_PARTNERS.find(x=>x.id===partnerId),pl=p.plans.find(x=>x.id===planId),walletUse=Math.min(S.wallet,pl.total);
+ openSheet(`<h3>${p.name} · ${pl.name}</h3><p>${p.menu}</p>
+  <div class="free-delivery">Free delivery included · no delivery tier selection</div>
+  <div class="wallet-use"><div class="walleticon" style="width:34px;height:34px;font-size:14px">₹</div><div class="grow"><b>Crave Wallet · ${money(S.wallet)}</b><small>You can use ${money(walletUse)} from Wallet and pay the remaining ${money(pl.total-walletUse)} normally.</small></div></div>
+  <p>Cancel ≥1 day before · eligible refund → Crave Wallet, as per partner policy.</p>
+  <button class="primary" onclick="confirmTiffin('${p.id}','${pl.id}',${walletUse})">Subscribe · ${money(pl.total)}</button>
+  <button class="secondary" onclick="closeSheet()">Back</button>`);
+}
+function confirmTiffin(partnerId,planId,walletUse){
+ const p=TIFFIN_PARTNERS.find(x=>x.id===partnerId),pl=p.plans.find(x=>x.id===planId);
+ S.wallet-=walletUse;S.tiffinSub={partnerId:partnerId,planId:planId,walletUsed:walletUse};
+ closeSheet();render();toastMsg(pl.name+" plan activated · free delivery");
+}
+function activeTiffinSub(){
+ const p=TIFFIN_PARTNERS.find(x=>x.id===S.tiffinSub.partnerId),pl=p.plans.find(x=>x.id===S.tiffinSub.planId);
+ return `<div class="active-sub"><b>Active · ${p.name} · ${pl.name}</b><small>Free delivery · cancel a meal one day before; refund goes to Crave Wallet per ${p.name} terms.</small><button onclick="cancelTiffinMeal()">Cancel next meal</button></div>`;
+}
+function cancelTiffinMeal(){
+ const p=TIFFIN_PARTNERS.find(x=>x.id===S.tiffinSub.partnerId);
+ openSheet(`<h3>Cancel next meal?</h3><p>Request cancellation at least one day before. ${p.terms} The eligible refund amount will be credited to Crave Wallet after the partner policy is applied.</p>
+  <button class="primary" onclick="closeSheet();toastMsg('Cancellation requested · eligible refund will go to Crave Wallet')">Request cancellation</button>
+  <button class="secondary" onclick="closeSheet()">Keep meal</button>`);
+}
+function rewards(){return header()+`<div class="pagehead"><div><h2>SuperCoins</h2><small>One connected Flipkart balance</small></div></div>
+ <div class="sc-header-card">
+   <div class="sc-toprow">
+     <div class="sc-pill"><img src="https://supercoins.magnify.club/supercoin-icon.webp" alt="SuperCoin"> Flipkart SuperCoins</div>
+     <div style="font-size:9px;color:rgba(255,255,255,.68)">Linked account</div>
+   </div>
+   <div class="sc-balance-label">Available balance</div>
+   <div class="sc-balance">${S.coins} SC</div>
+   <div class="sc-sub">Earn on Flipkart Food. Use across eligible Flipkart platforms.</div>
+ </div>
+
+ <div class="sc-grid">
+   <div class="sc-mini"><div class="big">10%</div><b>Uni Pass</b><small>Max 1,500 SC / month</small></div>
+   <div class="sc-mini"><div class="big">5%</div><b>Crave Black</b><small>Max 1,500 SC / month</small></div>
+   <div class="sc-mini"><div class="big">1/1000</div><b>Reels views</b><small>1 coin per 1,000 views</small></div>
+   <div class="sc-mini"><div class="big">1/10</div><b>Reels orders</b><small>1 coin per 10 orders</small></div>
+ </div>
+
+ <div class="sc-section">
+   <div class="sc-section-head">
+     <div class="sc-icon" style="background:#EEF4FF;color:#2874F0">⚡</div>
+     <div><b>Ways to earn</b><small>Only active earning routes</small></div>
+   </div>
+   <div class="sc-list">
+     <div class="sc-row"><div class="sc-dot">🎓</div><div><b>Uni Pass</b><small>10% on food orders</small></div></div>
+     <div class="sc-row"><div class="sc-dot">★</div><div><b>Crave Black</b><small>5% on food orders</small></div></div>
+     <div class="sc-row"><div class="sc-dot">▶</div><div><b>Reels</b><small>Views · clicks · orders</small></div></div>
+   </div>
+ </div>
+
+ <div class="sc-section">
+   <div class="sc-section-head">
+     <div class="sc-icon" style="background:#FFF8E0;color:#8D6A00">◎</div>
+     <div><b>How it works</b><small>Short version</small></div>
+   </div>
+   <div class="sc-usegrid">
+     <div class="sc-use"><b>Connected balance</b><small>Other Flipkart SuperCoins show here too.</small></div>
+     <div class="sc-use"><b>Redeem widely</b><small>Use on eligible Flipkart platforms.</small></div>
+   </div>
+ </div>`}
+function orders(){return header()+`<div class="pagehead"><div><h2>Orders</h2><small>Crave & Minutes</small></div></div><div class="mini"><b>McDonald's</b><small>Delivered yesterday · ₹119</small></div>`}
+function account(){return header()+`<div class="pagehead"><div><h2>Account</h2><small>Benefits, student access & wallet</small></div></div>
+ <div class="account-hero" onclick="go('wallet')">
+   <div class="row">
+     <div class="icon">₹</div>
+     <div>
+       <b>Crave Wallet</b>
+       <div class="bal">${money(S.wallet)}</div>
+       <small>Use on Crave orders, Planner and Tiffin. Eligible refunds come back here.</small>
+     </div>
+     <button class="openbtn">Open</button>
+   </div>
+ </div>
+ <div class="acc-list">
+   <div class="acc-tile pass-primary" onclick="go('passes')">
+     <div class="aicon">🎫</div>
+     <div class="atext">
+       <b>Food Passes</b>
+       <small>Uni Pass for students · Crave Black for premium benefits</small>
+       <div class="pass-chipline"><span>Free delivery</span><span>SuperCoins</span><span>Partner coupons</span></div>
+     </div>
+     <div class="arrow">›</div>
+   </div>
+   <div class="acc-tile status-tile" onclick="go('passes')">
+     <div class="aicon">🎓</div>
+     <div class="atext">
+       <b>Student status</b>
+       <small>${S.uniVerified?"Verified · Uni Pass active":"Verify college ID to unlock Uni Pass"}</small>
+     </div>
+     <div class="arrow">›</div>
+   </div>
+   <div class="acc-tile loc-tile">
+     <div class="aicon">📍</div>
+     <div class="atext">
+       <b>Delivery location</b>
+       <small>Koramangala, Bengaluru</small>
+     </div>
+     <div class="arrow">›</div>
+   </div>
+ </div>`}
+function passes(){
+ return header()+`<div class="pagehead"><button class="back" onclick="go('account')">‹</button><div><h2>Food Passes</h2><small>Save more on every food order</small></div></div>
+ <div class="pass-sheet">
+  <div class="pass-stack">
+   <div class="pass-student">
+     <div class="pass-ribbon">Uni Pass</div>
+     <div class="pass-title"><h3>Uni Pass</h3><div class="price">₹0</div></div>
+     <div class="pass-sub">Free for verified students. Built for campus food ordering with rewards across the Flipkart ecosystem.</div>
+     <div class="benefit-grid">
+       <div class="benefit"><b>Free delivery</b><small>On orders above ₹99</small></div>
+       <div class="benefit"><b>10% SuperCoins</b><small>On every Flipkart Food order</small></div>
+       <div class="benefit"><b>1,500 SC cap</b><small>Monthly earn limit</small></div>
+       <div class="benefit"><b>Partner coupons</b><small>Across Cleartrip, Myntra and other Flipkart services</small></div>
+     </div>
+     <div class="pass-cta">
+       <button class="primaryx" onclick="activateUniPass()">${S.uniVerified?"Active ✓":"Verify & Activate"}</button>
+       <button class="secondaryx" onclick="toastMsg('Student ID required for Uni Pass')">How it works</button>
+     </div>
+   </div>
+
+   <div class="pass-premium">
+     <div class="pass-ribbon">Crave Black</div>
+     <div class="pass-title"><h3>Crave Black Pass</h3><div class="price">₹199</div></div>
+     <div class="pass-sub">Premium pass for non-student users who want delivery savings, partner coupons and better rewards.</div>
+     <div class="benefit-grid">
+       <div class="benefit"><b>Free delivery</b><small>On orders above ₹99</small></div>
+       <div class="benefit"><b>5% SuperCoins</b><small>On every Flipkart Food order</small></div>
+       <div class="benefit"><b>1,500 SC cap</b><small>Monthly earn limit</small></div>
+       <div class="benefit"><b>Partner coupons</b><small>Across Cleartrip, Myntra and other Flipkart services</small></div>
+     </div>
+     <div class="pass-cta">
+       <button class="primaryx" onclick="toastMsg('Crave Black Pass added to plan')">Get Black Pass</button>
+       <button class="secondaryx" onclick="toastMsg('₹199 membership')">View details</button>
+     </div>
+   </div>
+  </div>
+ </div>`;
+}
+function activateUniPass(){
+ if(S.uniVerified){toastMsg("Uni Pass is already active");return}
+ openSheet(`<h3>Activate Uni Pass</h3><p>₹0 for verified students.</p>
+   <div class="benefit-grid" style="margin-top:10px">
+     <div class="benefit"><b>Free delivery</b><small>On orders above ₹99</small></div>
+     <div class="benefit"><b>10% SuperCoins</b><small>Up to 1,500 SC/month</small></div>
+     <div class="benefit"><b>Partner coupons</b><small>Cleartrip, Myntra & more</small></div>
+     <div class="benefit"><b>Student verification</b><small>College ID required</small></div>
+   </div>
+   <button class="primary" onclick="S.uniVerified=true;closeSheet();render();toastMsg('Uni Pass activated')">Verify college ID</button>
+   <button class="secondary" onclick="closeSheet()">Not now</button>`);
+}
+function walletPage(){
+ return header()+`<div class="pagehead"><button class="back" onclick="go('account')">‹</button><div><h2>Crave Wallet</h2><small>One balance across food</small></div></div>
+ ${walletWidget()}
+ <div class="twocards" style="padding:12px 15px 0">
+  <div class="mini" style="margin:0"><b>🍽 Spend</b><small>Planner · Tiffin · normal Crave orders</small></div>
+  <div class="mini" style="margin:0"><b>↩ Refunds</b><small>Eligible cancellations return here</small></div>
+ </div>`;
+}
+
+function searchSheet(){openSheet(`<h3>Search Crave</h3><input id="q" placeholder="Try burger, biryani, coffee…" oninput="searchNow(this.value)" style="width:100%;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 11px;margin-top:10px"><div id="results"></div>`)}
+function searchNow(v){
+ v=v.toLowerCase().trim();
+ const results=document.getElementById("results");
+ if(!v){results.innerHTML="";return}
+ const rr=R.filter(r=>(r.n+" "+r.c).toLowerCase().includes(v)).slice(0,6);
+ results.innerHTML=rr.map(r=>`<button class="secondary" onclick="closeSheet();openRest('${r.id}')">${r.n} · ${r.a}</button>`).join("");
+}
+
+function foodCartCount(){return Object.values(S.foodCart).reduce((a,b)=>a+b,0)}
+function foodCartSubtotal(){return Object.entries(S.foodCart).reduce((sum,[id,q])=>sum+(item(id)?.p||0)*q,0)}
+function foodCartAllBites(){const ids=Object.keys(S.foodCart);return ids.length>0&&ids.every(id=>item(id)?.bite)}
+function addFoodCart(id){
+ const it=item(id),r=rest(it.r);
+ if(S.foodRest&&S.foodRest!==r.id){
+   S.foodCart={};S.delivery="eco";
+   toastMsg("Started a new cart for "+r.n);
+ }
+ S.foodRest=r.id;
+ S.foodCart[id]=(S.foodCart[id]||0)+1;
+ if(S.mode==="bites"&&foodCartAllBites())S.delivery="bites";
+ renderFoodCartBar();
+ toastMsg(it.n+" added");
+}
+function renderFoodCartBar(){
+ const n=foodCartCount(),bar=document.getElementById("foodcartbar");
+ if(!bar)return;
+ bar.classList.toggle("on",n>0);
+ if(n){
+   document.getElementById("foodcarttitle").textContent=n+" item"+(n>1?"s":"")+" · "+money(foodCartSubtotal());
+   document.getElementById("foodcartsub").textContent=(S.foodRest?rest(S.foodRest).n:"Crave")+" · choose delivery";
+ }
+}
+function deliveryChoices(pattern="impulse"){
+ const choices=pattern==="scheduled"?[DELIVERY.scheduled,DELIVERY.standard]:[DELIVERY.eco,DELIVERY.standard];
+ if(pattern==="impulse"&&foodCartAllBites())choices.push(DELIVERY.bites);
+ return choices;
+}
+function deliveryCard(d){
+ return `<div class="delivery-option ${S.delivery===d.id?"on":""}" onclick="S.delivery='${d.id}';openFoodCart()">
+   <div><div class="dname"><span class="radio"></span>${d.name}</div><div class="dsub">${d.sub}</div></div><div class="dfee">${money(d.fee)}</div>
+ </div>`;
+}
+function economicsPanel(){
+ return `<div class="econbox">
+   <div class="eh">Model economics · per drop</div>
+   <div class="econrow head"><span>Tier</span><span>Batch</span><span>Cost</span><span>Margin</span></div>
+   ${[DELIVERY.eco,DELIVERY.scheduled,DELIVERY.standard,DELIVERY.bites].map(d=>`<div class="econrow"><span>${d.name}</span><span>${d.batch.toFixed(1)}x</span><span>${money(d.cost)}</span><span class="${d.margin<0?"neg":"pos"}">${d.margin<0?"−":"+"}${money(Math.abs(d.margin))}</span></div>`).join("")}
+ </div>`;
+}
+function openFoodCart(){
+ const ids=Object.keys(S.foodCart);
+ if(!ids.length){toastMsg("Your food cart is empty");return}
+ if(!deliveryChoices("impulse").some(d=>d.id===S.delivery))S.delivery="eco";
+ const d=DELIVERY[S.delivery],subtotal=foodCartSubtotal(),earn=Math.min(40,subtotal*.04);
+ openSheet(`<h3>${rest(S.foodRest).n}</h3><p>${ids.map(id=>item(id).n+" × "+S.foodCart[id]).join(" · ")}</p>
+   <div class="delivery-title"><b>Choose delivery</b><button onclick="toggleEcon()">ⓘ Model economics</button></div>
+   <div class="delivery-grid">${deliveryChoices("impulse").map(deliveryCard).join("")}</div>
+   <div id="econwrap" style="display:none">${economicsPanel()}</div>
+   <div class="wallet-use"><div class="walleticon" style="width:34px;height:34px;font-size:14px">₹</div><div class="grow"><b>Crave Wallet · ${money(S.wallet)}</b><small>Planner/Tiffin balance and refunds can be used on normal Crave food orders.</small></div><button onclick="S.useWallet=!S.useWallet;openFoodCart()">${S.useWallet?"Applied":"Use"}</button></div>
+   <div class="coins-checkout"><b>Earn ~${Math.round(earn)} SuperCoins</b><small>4% on food, capped at 40 SC/order. Redemption can cover up to 20% of a food order when balance ≥20 SC.</small></div>
+   ${(()=>{const gross=subtotal+d.fee,walletUse=S.useWallet?Math.min(S.wallet,gross):0;return `<div class="order-summary"><div class="line"><span>Food subtotal</span><span>${money(subtotal)}</span></div><div class="line"><span>${d.name} delivery</span><span>${money(d.fee)}</span></div>${walletUse?`<div class="line"><span>Crave Wallet</span><span>−${money(walletUse)}</span></div>`:""}<div class="line total"><span>Pay now</span><span>${money(gross-walletUse)}</span></div></div>`})()}
+   <button class="primary" onclick="placeFoodOrder()">Place order</button><button class="secondary" onclick="closeSheet()">Keep browsing</button>`);
+}
+function toggleEcon(){const x=document.getElementById("econwrap");if(x)x.style.display=x.style.display==="none"?"block":"none"}
+function placeFoodOrder(){
+ const n=foodCartCount(),d=DELIVERY[S.delivery],earned=Math.min(40,foodCartSubtotal()*.04),gross=foodCartSubtotal()+d.fee;
+ const walletUse=S.useWallet?Math.min(S.wallet,gross):0;
+ S.wallet-=walletUse;S.useWallet=false;S.coins+=Math.round(earned);S.foodCart={};S.foodRest=null;S.delivery="eco";closeSheet();renderFoodCartBar();toastMsg(n+" item(s) ordered · "+d.name+" selected");
+}
+function scheduledDeliverySheet(label,onConfirm){
+ S.delivery="scheduled";
+ openSheet(`<h3>${label}</h3><p>Scheduled orders use denser batching by default. You can upgrade delivery if you prefer.</p>
+   <div class="delivery-grid">${deliveryChoices("scheduled").map(deliveryCard).join("")}</div>
+   <div class="delivery-title"><b>Order-pattern economics</b><button onclick="toggleEcon()">ⓘ View</button></div>
+   <div id="econwrap" style="display:none">${economicsPanel()}</div>
+   <button class="primary" onclick="${onConfirm}">Confirm · ${money(DELIVERY[S.delivery].fee)} delivery</button><button class="secondary" onclick="closeSheet()">Back</button>`);
+}
+
+function cartCount(){return Object.values(S.cart).reduce((a,b)=>a+b,0)}
+function addCart(id,name){
+ S.cart[id]=(S.cart[id]||0)+1;
+ toastMsg(name+" added · Cart "+cartCount());
+ const cc=document.querySelectorAll(".cartmini");cc.forEach(x=>x.textContent="Cart · "+cartCount());
+}
+function reelSlide(x,idx){
+ const r=rest(x.r),it=item(x.i);
+ return `<section class="reelpage" data-reel="${idx}">
+   <video src="${x.vid}" muted loop playsinline preload="metadata" poster="${it.img}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"></video>
+   <img class="reelfallback" src="${it.img}" alt="${x.title}" style="display:none">
+   <div class="reelgrad"></div>
+   <div class="reelhint">Swipe up for next reel</div>
+   <div class="reeltop"><span>Crave Reels</span><span class="cartmini">Cart · ${cartCount()}</span></div>
+   <div class="reelside"><button onclick="event.stopPropagation();toastMsg('Saved')">♡</button><button onclick="event.stopPropagation();toastMsg('Share link copied')">↗</button></div>
+   <div class="reelinfo"><div class="reelbrand"><img src="${r.logo}" alt="${r.n}" onerror="this.style.visibility='hidden'"><span>${r.n}${it.bite?' · Bites':''}</span></div><h3>${x.title}</h3><div class="reelprice">${money(it.p)}</div><div style="font-size:8px;color:rgba(255,255,255,.58);margin-top:5px">${x.credit}</div></div>
+   <div class="reelcommerce"><div class="reelproduct"><img src="${it.img}" alt=""><div><b>${it.n}</b><small>${r.n}</small></div></div><button class="reeladd" onclick="event.stopPropagation();addFoodCart('${it.id}')">Add · ${money(it.p)}</button></div>
+ </section>`;
+}
+function openReel(i){
+ playerbody.innerHTML=`<div id="reelfeed" class="reelfeed">${REELS.map(reelSlide).join("")}</div>`;
+ player.classList.add("on");
+ requestAnimationFrame(()=>{
+   const feed=document.getElementById("reelfeed"),slides=[...feed.querySelectorAll(".reelpage")],videos=[...feed.querySelectorAll("video")];
+   if(slides[i])slides[i].scrollIntoView({block:"start"});
+   const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        const v=e.target.querySelector("video");
+        if(!v)return;
+        if(e.isIntersecting&&e.intersectionRatio>.65){videos.forEach(z=>{if(z!==v)z.pause()});v.play().catch(()=>{});}
+        else v.pause();
+      });
+   },{root:feed,threshold:[.25,.65,.9]});
+   slides.forEach(s=>io.observe(s));
+   window._reelObserver=io;
+ });
+}
+function closeReel(){
+ if(window._reelObserver){window._reelObserver.disconnect();window._reelObserver=null}
+ player.querySelectorAll("video").forEach(v=>v.pause());
+ player.classList.remove("on");playerbody.innerHTML="";
+}
+function openSheet(h){sheetbody.innerHTML=h;sheetbg.classList.add("on");sheet.classList.add("on")}
+function closeSheet(){sheetbg.classList.remove("on");sheet.classList.remove("on")}
+function toastMsg(m){toast.textContent=m;toast.classList.add("on");clearTimeout(window.tt);window.tt=setTimeout(()=>toast.classList.remove("on"),1500)}
+function nav(){
+ const ico={
+  home:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10.5 12 4l7 6.5"></path><path d="M7.5 9.5V19h9V9.5"></path></svg>`,
+  bites:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h6.8a3.2 3.2 0 1 1 0 6.4H7z"></path><path d="M7 11.4h8a3.3 3.3 0 1 1 0 6.6H7z"></path><path d="M7 5v13"></path></svg>`,
+  orders:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12v14H6z"></path><path d="M9 9h6"></path><path d="M9 12h6"></path><path d="M9 15h4"></path></svg>`,
+  account:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19a6.5 6.5 0 0 1 13 0"></path></svg>`
+ };
+ bottom.innerHTML=`
+ <button class="nav ${S.page==="home"?"on":""}" onclick="go('home')"><span class="ico">${ico.home}</span><span>Home</span></button>
+ <button class="nav ${S.page==="bites"?"on":""}" onclick="go('bites')"><span class="ico">${ico.bites}</span><span>Bites</span></button>
+ <button class="nav reelsnav" onclick="openReel(0)"><span class="orb"></span><span>Reels</span></button>
+ <button class="nav ${S.page==="orders"?"on":""}" onclick="go('orders')"><span class="ico">${ico.orders}</span><span>Orders</span></button>
+ <button class="nav ${S.page==="account"||S.page==="passes"||S.page==="wallet"?"on":""}" onclick="go('account')"><span class="ico">${ico.account}</span><span>Account</span></button>`;
+}
+function initPromo(){
+ clearInterval(window._promo);
+ const rail=document.getElementById("promorail"),dots=document.getElementById("dots");
+ if(!rail||!dots)return;
+ const cards=[...rail.children];let idx=0;
+ const paint=()=>[...dots.children].forEach((d,i)=>d.classList.toggle("on",i===idx));
+ window._promo=setInterval(()=>{
+   idx=(idx+1)%cards.length;
+   rail.scrollTo({left:cards[idx].offsetLeft-15,behavior:"smooth"});
+   paint();
+ },3900);
+ rail.addEventListener("scroll",()=>{
+   const mid=rail.scrollLeft+rail.clientWidth/2;let best=0,dist=Infinity;
+   cards.forEach((c,i)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(d<dist){dist=d;best=i}});
+   idx=best;paint();
+ },{passive:true});
+}
+
+function render(){
+ if(S.page==="home")screen.innerHTML=home();
+ else if(S.page==="bites")screen.innerHTML=bites();
+ else if(S.page==="restaurant")screen.innerHTML=restaurant();
+ else if(S.page==="planner")screen.innerHTML=planner();
+ else if(S.page==="tiffin")screen.innerHTML=tiffin();
+ else if(S.page==="minutes")screen.innerHTML=minutes();
+ else if(S.page==="rewards")screen.innerHTML=rewards();
+ else if(S.page==="orders")screen.innerHTML=orders();
+ else if(S.page==="account")screen.innerHTML=account();
+ else if(S.page==="passes")screen.innerHTML=passes();
+ else if(S.page==="wallet")screen.innerHTML=walletPage();
+ nav();renderFoodCartBar();requestAnimationFrame(initPromo);
+}
+const screen=document.getElementById("screen"),bottom=document.getElementById("bottom"),sheetbg=document.getElementById("sheetbg"),sheet=document.getElementById("sheet"),sheetbody=document.getElementById("sheetbody"),player=document.getElementById("player"),playerbody=document.getElementById("playerbody"),toast=document.getElementById("toast");
+render();
+</script>
+</body>
+</html>
